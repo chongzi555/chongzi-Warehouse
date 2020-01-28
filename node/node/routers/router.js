@@ -51,6 +51,8 @@ router.delete('/user/delete/:id',user.keepLog,user.delete);
 
 // 发表商品；
 router.post('/wares/add',user.keepLog,wares.add);
+// 商品类型；
+router.get('/wares/type/:type',user.keepLog,wares.type);
 
 // 增加章节；
 router.post('/chapter/add',user.keepLog,chapter.add);

@@ -12,6 +12,7 @@ const GoodsSchema = new Schema({
   img_url: String, // 图片
   type: String, // 类型
   area: String, // 地区
+	money: String, // 钱
   see: Number, // 查看次数
   recentlytime: String, // 最近一次时间
   commentNum: Number, // 评论个数

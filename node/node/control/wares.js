@@ -25,6 +25,27 @@ exports.add = async ctx => {
   }
 };
 
+exports.type = async ctx => {
+	if(ctx.token.error == 0){
+		let type = ctx.params.type;
+		const data = await Wares
+			.find({type})
+			.sort('see')
+			.limit(6)
+			.populate('from','username'); // 关联，那个字段，需要拿到什么数据，若要多个，则在username _id这样写。(有空格)
+		ctx.body = {
+			data,
+			error: 0
+		};
+	}else{
+		ctx.body = {
+			data = 0,
+			error: 1
+		};
+	}
+	
+};
+
 exports.list = async ctx => {
   let uid = ctx.session.uid;
   let page = ctx.params.page;
