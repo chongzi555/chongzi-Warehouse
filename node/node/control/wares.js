@@ -39,7 +39,7 @@ exports.type = async ctx => {
 		};
 	}else{
 		ctx.body = {
-			data = 0,
+			data: 0,
 			error: 1
 		};
 	}
