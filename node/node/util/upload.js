@@ -27,7 +27,7 @@ const photo = async ctx => {
 		arr.unshift(JSON.parse(d.img_url)+'')
 	}
   await new Promise((resolve, reject)=> {
-    Wares.updateOne({_id: id}, {img_url: JSON.stringify(arr)}, (err, res) => {
+    Wares.updateOne({_id: id}, {img_url: arr}, (err, res) => {
       if (err) throw err
       resolve(res);
     })
