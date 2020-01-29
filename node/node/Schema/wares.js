@@ -9,7 +9,7 @@ const GoodsSchema = new Schema({
     type: ObjectId,
     ref: 'users', // 关联users集合
   },
-  img_url: String, // 图片
+  img_url: Array, // 图片
   type: String, // 类型
   area: String, // 地区
 	money: String, // 钱
