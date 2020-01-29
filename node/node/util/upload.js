@@ -22,9 +22,8 @@ const photo = async ctx => {
   }
   const id = querystring.parse(ctx.querystring).id;
 	let d = await Wares.findById(id).exec();
-	if(d.img_url){
-		data = JSON.parse(d.img_url).push(arr[0]);
-		arr.unshift(JSON.parse(d.img_url)+'')
+	if(d.img_url.length){
+		arr.push(...d.img_url)
 	}
   await new Promise((resolve, reject)=> {
     Wares.updateOne({_id: id}, {img_url: arr}, (err, res) => {
