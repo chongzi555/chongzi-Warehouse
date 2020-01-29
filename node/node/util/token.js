@@ -11,7 +11,7 @@ exports.addtoken = (userInfo) => { //创建token并导出
 		age: userInfo.age,
 		mark: userInfo.mark,
 		role: userInfo.role
-	}, serect, {expiresIn: '1h'});
+	}, serect, {expiresIn: '5h'});
   return token;
 };
 exports.decodeToken = (data) => {
