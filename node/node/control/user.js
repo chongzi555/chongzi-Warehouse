@@ -104,23 +104,20 @@ exports.login = async ctx => {
 
 // 是否还在登录时间
 exports.islogin = async ctx => {
-  let cookieId = ctx.cookies.get('uid');
-  let sessionId = ctx.session.uid;
-  let data;
-  if(cookieId === sessionId){
-    data = await User.findById(sessionId);
-  }else{
-    ctx.cookies.set('username',null,{
-      maxAge: 0,
-    })
-    ctx.cookies.set('uid',null,{
-      maxAge: 0,
-    })
-    ctx.session = null;
-  }
-  ctx.body = data;
+	if(ctx.token.error == 0){
+		let data = await User.findById(ctx.token.decode_token.id).exec();
+		ctx.body = {
+			error: ctx.token.error,
+			data,
+		};
+	}else{
+		ctx.body = {
+			error: 1,
+			data: 0
+		}
+	}
+	
 };
-
 // 确定用户的状态  保持用户的状态
 exports.keepLog = async (ctx,next) => {
   let token = ctx.request.header.authorization;
