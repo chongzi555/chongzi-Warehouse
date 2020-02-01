@@ -64,8 +64,11 @@ exports.list = async ctx => {
 
 exports.details = async ctx => {
   let _id = ctx.params.id;
-  const data = await Diary
+  const data = await Wares
     .findById(_id)
     .populate('from','username _id avatar');
-  ctx.body = data;
+  ctx.body = {
+		data,
+		error: 0
+	};
 };
