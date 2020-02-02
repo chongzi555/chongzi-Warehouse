@@ -61,7 +61,6 @@ exports.list = async ctx => {
   };
 };
 
-
 exports.details = async ctx => {
   let _id = ctx.params.id;
   const data = await Wares
