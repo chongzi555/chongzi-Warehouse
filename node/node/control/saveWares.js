@@ -13,7 +13,7 @@ exports.add = async ctx => {
 		  author:uid,
 		})
 		  .save();
-		data = await Save
+		const data = await Save
 		  .findOne({ware: waresId,author:uid})
 		  .populate('author','username')
 		  .populate({

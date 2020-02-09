@@ -60,7 +60,7 @@ router.get('/wares/mylist/:page',user.keepLog,wares.myList);
 router.get('/wares/details/:id',user.keepLog,wares.details);
 
 // 收藏商品；
-router.post('/save/add',user.keepLog,save.add);
+router.post('/save/add/:id',user.keepLog,save.add);
 // 是否收藏；
 router.get('/save/is/:id',user.keepLog,save.issave);
 // 删除收藏；
