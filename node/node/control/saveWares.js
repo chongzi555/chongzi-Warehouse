@@ -70,14 +70,13 @@ exports.reduce = async ctx => {
 			error: 1
 		}
   }
-  ctx.body = data;
 };
 
 // 我的收藏列表
 exports.list = async ctx => {
   if(ctx.token.error == 0){
 		const uid = ctx.token.decode_token.id;
-		data = await Save
+		const data = await Save
 			.findOne({author:uid})	
 			.populate('author','username')
 			.populate({
@@ -88,7 +87,14 @@ exports.list = async ctx => {
 					select:'_id',
 				},
 			});
+		ctx.body = {
+			data,
+			error: 0
+		}
 	}else{
-		
+		ctx.body = {
+			data: 0,
+			error: 1
+		}
 	}
 };
