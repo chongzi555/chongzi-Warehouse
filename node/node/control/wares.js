@@ -38,6 +38,38 @@ exports.type = async ctx => {
 	};
 };
 
+exports.myList = async ctx => {
+	if(ctx.token.error == 0){
+		let page = ctx.params.page;
+		let id = ctx.token.decode_token.id;
+		page--;
+		let query;
+		if(ctx.session.username === 'admin'){
+		  query = {};
+		}else{
+		  query = {from:id};
+		}
+		const data = await Wares
+		  .find(query)
+		  .sort('-created')
+		  .skip(page*5)
+		  .limit(5)
+		  .populate('from','username avatar'); // 关联，那个字段，需要拿到什么数据，若要多个，则在username _id这样写。(有空格)
+		const total = await Wares.find(query);
+		ctx.body = {
+		  data,
+		  total:total.length,
+			error: 0
+		};
+	}else{
+		ctx.body = {
+		  data: 0,
+			error: 1
+		};
+	}
+  
+};
+
 exports.list = async ctx => {
   let uid = ctx.session.uid;
   let page = ctx.params.page;

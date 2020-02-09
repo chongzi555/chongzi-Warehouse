@@ -10,6 +10,7 @@ const parentingSubject = require('../control/parentingSubject');
 const audio = require('../control/audio');
 const ranking = require('../control/ranking');
 const wares = require('../control/wares');
+const save = require('../control/saveWares');
 
 const upload = require('../util/upload')
 const avatar = require('../util/avatar')
@@ -53,8 +54,20 @@ router.delete('/user/delete/:id',user.keepLog,user.delete);
 router.post('/wares/add',user.keepLog,wares.add);
 // 商品类型；
 router.get('/wares/type/:type',user.keepLog,wares.type);
+// 我的旧物；
+router.get('/wares/mylist/:page',user.keepLog,wares.myList);
 // 商品详情；
 router.get('/wares/details/:id',user.keepLog,wares.details);
+
+// 收藏商品；
+router.post('/save/add',user.keepLog,save.add);
+// 是否收藏；
+router.get('/save/is/:id',user.keepLog,save.issave);
+// 删除收藏；
+router.delete('/reduce/save/:id',user.keepLog,save.reduce);
+// 我的收藏；
+router.get('/save/my',user.keepLog,save.list);
+
 
 // 增加章节；
 router.post('/chapter/add',user.keepLog,chapter.add);
