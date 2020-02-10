@@ -83,7 +83,7 @@ exports.list = async ctx => {
 					select: '_id img_url title content type area money see recentlytime commentNum',
 					populate:{		 
 					path:'from',
-					select:'_id',
+					select:'_id username avatar',
 				},
 			});
 		ctx.body = {
