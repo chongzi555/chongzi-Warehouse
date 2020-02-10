@@ -15,13 +15,12 @@ exports.add = async ctx => {
 		  .save();
 		const data = await Save
 		  .findOne({ware: waresId,author:uid})
-		  .populate('author','username')
 		  .populate({
 		    path: 'ware',
-		    select: '_id',
+		    select: '_id img_url title content type area money see recentlytime commentNum',
 		    populate:{
 		      path:'from',
-		      select:'_id'
+		      select:'_id username avatar'
 		    }
 		  });
 		ctx.body = {
