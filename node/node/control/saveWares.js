@@ -15,6 +15,7 @@ exports.add = async ctx => {
 		  .save();
 		const data = await Save
 		  .findOne({ware: waresId,author:uid})
+			.populate('author','username avatar')
 		  .populate({
 		    path: 'ware',
 		    select: '_id img_url title content type area money see recentlytime commentNum',
@@ -76,11 +77,10 @@ exports.list = async ctx => {
   if(ctx.token.error == 0){
 		const uid = ctx.token.decode_token.id;
 		const data = await Save
-			.find({author:uid})	
-			.populate('author','username')
+			.find({author:uid})
 			.populate({
 					path: 'ware',
-					select: '_id',
+					select: '_id img_url title content type area money see recentlytime commentNum',
 					populate:{		 
 					path:'from',
 					select:'_id',
