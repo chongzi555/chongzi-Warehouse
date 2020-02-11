@@ -57,9 +57,8 @@ exports.issave = async ctx => {
 // 取消收藏
 exports.reduce = async ctx => {
   if(ctx.token.error == 0){
-  	const ware = ctx.params.id;
-  	const uid = ctx.token.decode_token.id;
-  	const data = await Save.deleteOne({author:uid,ware}).exec();
+  	const id = ctx.params.id;
+  	const data = await Save.deleteOne({_id:id}).exec();
   	ctx.body = {
   		data,
   		error: 0
