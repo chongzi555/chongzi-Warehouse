@@ -45,7 +45,9 @@ router.get('/user/list/:page',user.keepLog,user.list);
 // 用户排行榜
 router.get('/user/rankings/:page',user.keepLog,user.rankings);
 // 修改用户信息
-router.put('/user/changeUserInfo',user.keepLog,user.changeUserInfo);
+router.put('/userInfo/:key/:val',user.keepLog,user.modifyUserInfo);
+// 修改密码接口
+router.put('/user/password',user.keepLog,user.changePassword);
 
 // 个人中心 -> 用户删除
 router.delete('/user/delete/:id',user.keepLog,user.delete);

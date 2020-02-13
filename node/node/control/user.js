@@ -148,6 +148,71 @@ exports.logout = async ctx => {
   ctx.body = '';
 };
 
+// 修改用户信息
+exports.modifyUserInfo = async ctx => {
+  let d = Token.decodeToken(ctx.request.header.authorization);
+  let key = ctx.params.key;
+  let val = ctx.params.val;
+  let error = d.error;
+  if(error == 0){
+    if(key !== 'username'){ // 不是修改用户名
+      let obj = {[key]:val};
+      await User.updateOne({_id:d.id},{$set:{[key]:val}}).exec();
+      const data = await User.findById(d.id).exec();
+      var token = Token.addtoken(data);
+      ctx.body = {
+        data,
+        error: error,
+        token
+      };
+    }else{ // 修改用户名
+      const data = await new Promise((resolve, reject)=>{
+        User.find({username: ctx.params.val},async(err,data)=>{ // 用户名是否存在。
+          if(err)return reject(err);
+          if(!data.length){ // 不存在,可修改
+            await User.updateOne({_id:d.id},{$set:{[key]:val}}).exec();
+            const user = await User.findById(d.id).exec();
+            resolve(user);
+          }else{ // 用户名已存在
+            resolve('用户名已存在,修改失败!');
+          }
+        });
+      });
+      var token = Token.addtoken(data);
+      ctx.body = {
+        data,
+        error: error,
+        token
+      }
+    }
+  }else{
+    
+  }
+};
+
+// 修改密码
+exports.changePassword = async ctx => {
+  let body,data,old_pwd,new_pwd;
+  if(ctx.token.error === 0){
+    let id = ctx.token.decode_token.id;
+    body = ctx.request.body;
+    old_pwd = body.passwordOld;
+    new_pwd = body.passwordNew;
+    let yes = await User.find({_id:id,password: old_pwd});
+    if(yes.length){ // 原密码密码是正确的，可以修改
+      await User.updateOne({_id:id},{$set:{password:new_pwd}}).exec();
+      data = 1;
+    }else{ // 原密码错误
+      data = 0;
+    }
+  }
+  ctx.body = {
+    error: ctx.token.error,
+    data,
+    token: ctx.token.token
+  };
+};
+
 // userlist
 exports.list = async ctx => {
   let page = ctx.params.page;
@@ -215,19 +280,6 @@ exports.rankings = async ctx => {
     total:total.length,
   };
 };
-
-exports.changeUserInfo = async ctx => {
-  let data = 1;
-  if(!ctx.session.uid){
-    data = 0;
-  }else{
-    let _id = ctx.request.body._id;
-    console.log(ctx.request.body)
-    User.updateOne({_id},{$set:ctx.request.body}).exec();
-  }
-  ctx.body = data;
-};
-
 
 exports.message = async ctx => {
   let data;
