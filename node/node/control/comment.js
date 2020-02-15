@@ -2,6 +2,7 @@ const Comment = require('../Models/comment');
 const Diary = require('../Models/diary')
 const User = require('../Models/user')
 const CommentGood = require('../Models/comment_good')
+const Ware = require('../Models/wares')
 
 exports.diary_list = async ctx => { // 对应日记的评论
   let diary_id = ctx.params.id;
@@ -13,56 +14,55 @@ exports.diary_list = async ctx => { // 对应日记的评论
 };
 
 exports.add = async ctx => {
-  let data;
-  if(!ctx.session.uid){
-    data = 0;
-  }else{
+  if(ctx.token.error == 0){
     let dataBody = ctx.request.body;
-    dataBody.author = ctx.session.uid; // 评论的用户
+    dataBody.author = ctx.token.decode_token.id; // 评论的用户
+    /*
+      {
+        authod: id,
+        ware: id,
+        comment_con: string,
+      }
+    */
     const save = await new Comment(dataBody).save();
 
-    data = await Comment
+    const data = await Comment
       .findById(save._id)
       .populate('author','username avatar')
       .populate({
-        path: 'diary',
+        path: 'ware',
         select: '_id',
         populate:{
           path:'from',
           select:'_id'
         }
       });
-    if(data.diary.from._id != ctx.session.uid){
-      await Diary.updateOne({_id:save.diary},{$inc:{commentNum:1,com_mes:1}})
-      await User.updateOne({_id:data.diary.from._id},{$inc:{message:1}})
-    }else{
-      await Comment.updateOne({_id:save._id},{is_read:true});
-      await Diary.updateOne({_id:save.diary},{$inc:{commentNum:1}})
+    await Ware.updateOne({_id:save.ware},{$inc:{commentNum:1}});
+    ctx.body = {
+      error: 0,
+      data
     }
-
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
   }
-  ctx.body = data;
+  
 };
 
 exports.list = async ctx => {
-  let uid = ctx.session.uid;
   let page = ctx.params.page;
+  let wareId = ctx.params.id;
   page--;
-  let query;
-  if(ctx.session.username === 'admin'){
-    query = {};
-  }else{
-    query = {author:uid};
-  }
-  console.log(query)
   const data = await Comment
-    .find(query)
+    .find({ware: wareId})
     .sort('-created')
     .skip(page*10)
     .limit(10)
-    .populate('author','username') // 关联，那个字段，需要拿到什么数据，若要多个，则在username _id这样写。(有空格)
-    .populate('diary','title');
-  const total = await Comment.find(query)
+    .populate('author','username avatar') // 关联，那个字段，需要拿到什么数据，若要多个，则在username _id这样写。(有空格)
+    .populate('ware','title from type');
+  const total = await Comment.find({ware: wareId})
   ctx.body = {
     data,
     total:total.length,

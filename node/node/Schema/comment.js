@@ -7,13 +7,9 @@ const CommentSchema = new Schema({
     type: ObjectId,
     ref: 'users',
   },
-  diary:{
+  ware:{
     type:ObjectId,
-    ref: 'diaries',
-  },
-  is_read:{
-    type:Boolean,
-    default:false,
+    ref: 'wares',
   },
   comment_goodNum: Number, // 评论点赞个数
   comment_con: String,

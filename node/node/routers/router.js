@@ -61,6 +61,11 @@ router.get('/wares/mylist/:page',user.keepLog,wares.myList);
 // 商品详情；
 router.get('/wares/details/:id',user.keepLog,wares.details);
 
+// 商品评论；
+router.post('/wares/comment',user.keepLog,comment.add);
+// 商品评论；
+router.get('/wares/comment/:id/:page',user.keepLog,comment.list);
+
 // 收藏商品；
 router.post('/save/add/:id',user.keepLog,save.add);
 // 是否收藏；
