@@ -7,9 +7,9 @@ const CommentGoodSchema = new Schema({
     type: ObjectId,
     ref: 'users',
   },
-  diary:{
+  ware:{
     type:ObjectId,
-    ref: 'diaries',
+    ref: 'wares',
   },
   comment:{
     type:ObjectId,

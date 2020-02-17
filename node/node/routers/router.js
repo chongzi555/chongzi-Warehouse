@@ -75,6 +75,15 @@ router.delete('/reduce/save/:id',user.keepLog,save.reduce);
 // 我的收藏；
 router.get('/save/my',user.keepLog,save.list);
 
+// comment_good add
+router.post('/comment_good/add',user.keepLog,comment.goodAdd);
+
+// comment_good add
+router.delete('/comment_good/delete/:id',user.keepLog,comment.goodDelete);
+
+// comment_good list
+router.get('/comment_good/list/:id',user.keepLog,comment.goodList);
+
 
 // 增加章节；
 router.post('/chapter/add',user.keepLog,chapter.add);
@@ -137,14 +146,7 @@ router.get('/comment/message/:id',user.keepLog,comment.message);
 // comment 评论 message
 router.delete('/comment/message/:id',user.keepLog,comment.messageDel);
 
-// comment_good add
-router.post('/comment_good/add',user.keepLog,comment.goodAdd);
 
-// comment_good add
-router.delete('/comment_good/delete/:id',user.keepLog,comment.goodDelete);
-
-// comment_good list
-router.get('/comment_good/list/:id',user.keepLog,comment.goodList);
 
 // comment delete
 router.delete('/comment/delete/:id',user.keepLog,comment.delete);

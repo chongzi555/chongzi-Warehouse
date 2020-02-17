@@ -69,40 +69,56 @@ exports.list = async ctx => {
   };
 };
 
+// 添加评论点赞
 exports.goodAdd = async ctx => {
-  let data = 1;
-  if(!ctx.session.uid){
-    data = 0;
-  }else{
-    let uid = ctx.session.uid;
+  if(ctx.token.error == 0){
+    let uid = ctx.token.decode_token.id;
     let dataBody = ctx.request.body;
     const commentId = ctx.request.body.comment;
     dataBody.author = uid;
 
-    await new CommentGood(dataBody).save()
+    const data = await new CommentGood(dataBody).save();
     await Comment.updateOne({_id:commentId},{$inc:{comment_goodNum:1}});
-  }
-  ctx.body = data;
-};
-
-exports.goodList = async ctx => {
-  let uid = ctx.session.uid;
-  let diary = ctx.params.id;
-  const data = await CommentGood.find({author:uid,diary})
-  ctx.body = data;
-};
-
-exports.goodDelete = async ctx => {
-  let data = 1;
-  if(!ctx.session.uid) {
-    data = 0;
+    ctx.body = {
+      error: 0,
+      data
+    }
   }else{
-    let uid = ctx.session.uid;
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
+  }
+};
+
+// 评论点赞列表
+exports.goodList = async ctx => {
+  let uid = ctx.token.decode_token.id;
+  let wareId = ctx.params.id;
+  const data = await CommentGood.find({author:uid,ware:wareId})
+  ctx.body = {
+    error: 0,
+    data
+  }
+};
+
+// 评论点赞删除
+exports.goodDelete = async ctx => {
+  if(ctx.token.error == 0){
+    let uid = ctx.token.decode_token.id;
     let comment = ctx.params.id;
     await CommentGood.deleteOne({comment,author:uid});
     await Comment.updateOne({_id:comment},{$inc:{comment_goodNum:-1}});
+    ctx.body = {
+      error: 0,
+      data: 1
+    }
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
   }
-  ctx.body = data;
 };
 
 exports.delete = async ctx => {
