@@ -1,5 +1,6 @@
 
 const Diary = require('../Models/diary')
+const Ware = require('../Models/ware')
 const User = require('../Models/user')
 const Good = require('../Models/good_ware')
 
@@ -16,7 +17,7 @@ exports.add = async ctx => {
       .findOne({ware,author:uid,})
       .populate('author','username')
       .populate({
-        path: 'diary',
+        path: 'ware',
         select: '_id',
         populate:{
           path:'from',
@@ -30,7 +31,7 @@ exports.add = async ctx => {
     //   await Good.updateOne({_id:data._id},{is_read:true});
     //   await Diary.updateOne({_id:diary},{$inc:{good:1}})
     // }
-    await Diary.updateOne({_id:ware},{$inc:{good:1,good_mes:1}});
+    await Ware.updateOne({_id:ware},{$inc:{good:1,good_mes:1}});
     ctx.body = {
       error: 0,
       data

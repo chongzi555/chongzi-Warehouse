@@ -22,7 +22,7 @@ const GoodWareSchema = new Schema({
 GoodWareSchema.post('remove',doc => { // doc的那个实例数据.
   const Diary = require('../Models/diary')
   const User = require('../Models/user')
-  const Good = require('../Models/good_diary')
+  const Good = require('../Models/good_ware')
   const Ware = require('../Models/wares')
 
 
