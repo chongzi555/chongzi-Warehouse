@@ -11,6 +11,7 @@ const audio = require('../control/audio');
 const ranking = require('../control/ranking');
 const wares = require('../control/wares');
 const save = require('../control/saveWares');
+const good = require('../control/good');
 
 const upload = require('../util/upload')
 const avatar = require('../util/avatar')
@@ -65,6 +66,11 @@ router.get('/wares/details/:id',user.keepLog,wares.details);
 router.post('/wares/comment',user.keepLog,comment.add);
 // 商品评论；
 router.get('/wares/comment/:id/:page',user.keepLog,comment.list);
+
+// 商品点赞；
+router.post('/ware/good',user.keepLog,good.add);
+// 商品点赞；
+router.get('/ware/isgood/:id',user.keepLog,good.isgood);
 
 // 收藏商品；
 router.post('/save/add/:id',user.keepLog,save.add);

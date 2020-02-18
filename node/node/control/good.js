@@ -1,53 +1,54 @@
-const Good = require('../Models/good_diary');
+
 const Diary = require('../Models/diary')
 const User = require('../Models/user')
+const Good = require('../Models/good_ware')
 
 exports.add = async ctx => {
-  let data = 1;
-  if(!ctx.session.uid){
-    data = 0;
-  }else{
-    let diary = ctx.request.body.diary;
-    const uid = ctx.session.uid;
+  if(ctx.token.error == 0){
+    let ware = ctx.request.body.ware;
+    const uid = ctx.token.decode_token.id;
     await new Good({
-      diary,
+      ware,
       author:uid,
     })
       .save();
-    data = await Good
-      .findOne({diary,author:uid,})
+    const data = await Good
+      .findOne({ware,author:uid,})
       .populate('author','username')
       .populate({
         path: 'diary',
         select: '_id',
         populate:{
           path:'from',
-          select:'_id'
+          select:'_id avatar username'
         }
       });
-    if(data.diary.from._id != ctx.session.uid){
-      await Diary.updateOne({_id:diary},{$inc:{good:1,good_mes:1}});
-      await User.updateOne({_id:data.diary.from._id},{$inc:{message:1}})
-    }else{ // 与日记是同一个用户
-      await Good.updateOne({_id:data._id},{is_read:true});
-      await Diary.updateOne({_id:diary},{$inc:{good:1}})
+    // if(data.ware.from._id != uid){
+    //   await Diary.updateOne({_id:diary},{$inc:{good:1,good_mes:1}});
+    //   await User.updateOne({_id:data.diary.from._id},{$inc:{message:1}})
+    // }else{ // 与日记是同一个用户
+    //   await Good.updateOne({_id:data._id},{is_read:true});
+    //   await Diary.updateOne({_id:diary},{$inc:{good:1}})
+    // }
+    await Diary.updateOne({_id:ware},{$inc:{good:1,good_mes:1}});
+    ctx.body = {
+      error: 0,
+      data
     }
+  }else{
+    error: 1,
+    data: 0,
   }
-  ctx.body = data;
 };
 
 exports.isgood = async ctx => {
-  let diary = ctx.params.id;
-  console.log(diary)
-  const uid = ctx.session.uid;
-  let data = 0;
-  await Good.find({author:uid,diary,})
-    .then((res)=>{
-      if(res.length){ // 有值
-        data = 1;
-      }
-    });
-  ctx.body = data;
+  let ware = ctx.params.id || 1;
+  const uid = ctx.token.decode_token.id;
+  let data = await Good.find({author:uid,ware});
+  ctx.body = {
+    error: 0,
+    data
+  };
 };
 
 exports.reduce = async ctx => { // 取消日记的点赞
