@@ -69,8 +69,10 @@ router.get('/wares/comment/:id/:page',user.keepLog,comment.list);
 
 // 商品点赞；
 router.post('/ware/good',user.keepLog,good.add);
-// 商品点赞；
+// 判断商品点赞；
 router.get('/ware/isgood/:id',user.keepLog,good.isgood);
+// 商品点赞删除；
+router.delete('/ware/good_reduce/:id',user.keepLog,good.reduce)
 
 // 收藏商品；
 router.post('/save/add/:id',user.keepLog,save.add);

@@ -52,16 +52,13 @@ exports.isgood = async ctx => {
 };
 
 exports.reduce = async ctx => { // 取消日记的点赞
-  let data;
-  if(!ctx.session.uid){
-    data = 0;
-  }else{
-    data = ctx.session.uid;
-    let diary = ctx.params.id;
+  if(ctx.token.error == 0){
+    let uid = ctx.token.decode_token.id;
+    let ware = ctx.params.id;
     await Good
-      .findOne({diary,author:data})
+      .findOne({ware,author:uid})
       .populate({
-        path:'diary',
+        path:'ware',
         select:'_id',
         populate:{
           path:'from',
@@ -69,8 +66,16 @@ exports.reduce = async ctx => { // 取消日记的点赞
         }
       })
       .then(data=>data.remove());
+    ctx.body = {
+      error: 0,
+      data: 1
+    }
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
   }
-  ctx.body = data;
 };
 
 exports.list = async ctx => {
