@@ -7,9 +7,9 @@ const ReplySchema = new Schema({
     type: ObjectId,
     ref: 'users',
   },
-  diary:{ // 回复对应的日记。
+  ware:{ // 回复对应的日记。
     type:ObjectId,
-    ref: 'diaries',
+    ref: 'wares',
   },
   comment:{ // 关联评论集合
     type:ObjectId,

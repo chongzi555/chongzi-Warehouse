@@ -66,6 +66,10 @@ router.get('/wares/details/:id',user.keepLog,wares.details);
 router.post('/wares/comment',user.keepLog,comment.add);
 // 商品评论；
 router.get('/wares/comment/:id/:page',user.keepLog,comment.list);
+// 商品回复add；
+router.post('/wares/reply',user.keepLog,reply.add);
+// 商品回复列表；
+router.get('/wares/reply/:id/:page',user.keepLog,reply.list);
 
 // 商品点赞；
 router.post('/ware/good',user.keepLog,good.add);
