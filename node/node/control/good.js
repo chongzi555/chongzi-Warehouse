@@ -1,6 +1,6 @@
 
 const Diary = require('../Models/diary')
-const Ware = require('../Models/ware')
+const Ware = require('../Models/wares')
 const User = require('../Models/user')
 const Good = require('../Models/good_ware')
 
