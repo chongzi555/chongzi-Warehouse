@@ -66,10 +66,11 @@ router.get('/wares/details/:id',user.keepLog,wares.details);
 router.post('/wares/comment',user.keepLog,comment.add);
 // 商品评论；
 router.get('/wares/comment/:id/:page',user.keepLog,comment.list);
-// 商品回复add；
-router.post('/wares/reply',user.keepLog,reply.add);
-// 商品回复列表；
-router.get('/wares/reply/:id/:page',user.keepLog,reply.list);
+
+// reply add
+router.post('/reply/add',user.keepLog,reply.add);
+// reply list
+router.get('/reply/list/:id',user.keepLog,reply.list);
 
 // 商品点赞；
 router.post('/ware/good',user.keepLog,good.add);
@@ -163,14 +164,7 @@ router.delete('/comment/message/:id',user.keepLog,comment.messageDel);
 // comment delete
 router.delete('/comment/delete/:id',user.keepLog,comment.delete);
 
-// reply add
-router.post('/reply/add',user.keepLog,reply.add);
 
-// reply list
-router.get('/reply/list/:id',user.keepLog,reply.list);
-
-// reply other
-router.post('/reply/other',user.keepLog,reply.other);
 
 
 
