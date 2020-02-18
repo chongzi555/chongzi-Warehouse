@@ -7,7 +7,7 @@ exports.add = async ctx => { // 回复评论，reply_id = 0;
     let dataBody = ctx.request.body;
     dataBody.author = uid;
     const id = await new Reply(dataBody).save();
-    data = await Reply
+    const data = await Reply
       .findById(id._id) // id._id回复的id
       .populate('author','username avatar')
       .populate({
@@ -20,6 +20,16 @@ exports.add = async ctx => { // 回复评论，reply_id = 0;
       })
     // 对应的评论 comment_replyNum +1;
     await Comment.updateOne({_id:id.comment},{$inc:{comment_replyNum:1}});
+
+    ctx.body = {
+      error: 0,
+      data
+    }
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
   }
 };
 
