@@ -36,10 +36,10 @@ GoodWareSchema.post('remove',doc => { // doc的那个实例数据.
   *   3、删除自己
   */
   Ware.updateOne({_id:wareId},{$inc:{good:-1}}).exec();
-  if(!doc.is_read){ // is_read为false   用户没看过。   减掉。
-    Diary.updateOne({_id:wareId},{$inc:{good_mes:-1}}).exec(); // 4
-    User.updateOne({_id:wareId},{$inc:{message:-1}}).exec(); // 4
-  }
+  // if(!doc.is_read){ // is_read为false   用户没看过。   减掉。
+  //   Diary.updateOne({_id:wareId},{$inc:{good_mes:-1}}).exec(); // 4
+  //   User.updateOne({_id:wareId},{$inc:{message:-1}}).exec(); // 4
+  // }
   Good.deleteOne({_id:goodId}).exec(()=>{
 
   });
