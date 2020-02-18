@@ -36,8 +36,10 @@ exports.add = async ctx => {
       data
     }
   }else{
-    error: 1,
-    data: 0,
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
   }
 };
 
