@@ -12,6 +12,7 @@ const ranking = require('../control/ranking');
 const wares = require('../control/wares');
 const save = require('../control/saveWares');
 const good = require('../control/good');
+const deal = require('../control/deal');
 
 const upload = require('../util/upload')
 const avatar = require('../util/avatar')
@@ -87,6 +88,13 @@ router.get('/save/is/:id',user.keepLog,save.issave);
 router.delete('/reduce/save/:id',user.keepLog,save.reduce);
 // 我的收藏；
 router.get('/save/my',user.keepLog,save.list);
+
+// 添加交易商品接口；
+router.post('/deal/add',user.keepLog,deal.add);
+// 删除交易商品接口；
+router.delete('/reduce/deal/:id',user.keepLog,deal.reduce);
+// 我的交易商品接口；
+router.get('/deal/my',user.keepLog,deal.list);
 
 // comment_good add
 router.post('/comment_good/add',user.keepLog,comment.goodAdd);
