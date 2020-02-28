@@ -8,6 +8,7 @@ const Comment = require('../Models/comment');
 exports.add = async ctx => {
     if (ctx.token.error == 0) {
         // 商品id          ctx.request.body.ware
+       	let bodyData = ctx.request.body;
         let uid = ctx.token.decode_token.id;
         bodyData.from = uid;
         const data = await new Deals(bodyData)
