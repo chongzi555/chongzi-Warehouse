@@ -10,7 +10,7 @@ exports.add = async ctx => {
         // 商品id          ctx.request.body.ware
        	let bodyData = ctx.request.body;
         let uid = ctx.token.decode_token.id;
-        bodyData.from = uid;
+        bodyData.author = uid;
         const data = await new Deals(bodyData)
             .save()
             .then(res => res);
