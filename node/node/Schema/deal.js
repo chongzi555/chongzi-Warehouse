@@ -11,7 +11,7 @@ const CommentSchema = new Schema({
     type:ObjectId,
     ref: 'wares',
   },
-  status: : {
+  status: {
     type: Number,
     default: 0
   },
