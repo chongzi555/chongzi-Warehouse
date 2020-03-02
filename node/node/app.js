@@ -5,6 +5,7 @@ const body = require('koa-body')
 const cors = require('@koa/cors'); // 跨域
 const {join} = require('path')
 const session = require('koa-session')
+const socket = require('./util/online.js')
 
 const app = new Koa
 
