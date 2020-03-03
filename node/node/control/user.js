@@ -298,9 +298,9 @@ exports.message = async ctx => {
 
 
 exports.chat = async ctx => {
-  if(true){
+  if(ctx.token.error == 0){
     let id = ctx.params.id; // 聊天对象id
-    let uid = 66667777; // 自己id
+    let uid = ctx.token.decode_token.id; // 自己id
     var room = id + '-' + uid;
     var room2 = uid + '-' + id;
 
@@ -356,6 +356,11 @@ exports.chat = async ctx => {
     ctx.body = {
       error: 0,
       data,
+    }
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
     }
   }
   
