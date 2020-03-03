@@ -2,6 +2,9 @@ const User = require('../Models/user')
 const crypto = require('../util/enctypt')
 const Token = require('../util/token')
 
+const fs = require('fs');
+const path = require('path');
+
 // 注册中间件
 exports.reg = async ctx => {
   let data = ctx.request.body;
@@ -292,3 +295,68 @@ exports.message = async ctx => {
   }
   ctx.body = data;
 };
+
+
+exports.chat = async ctx => {
+  if(true){
+    let id = ctx.params.id; // 聊天对象id
+    let uid = 66667777; // 自己id
+    var room = id + '-' + uid;
+    var room2 = uid + '-' + id;
+
+    var time = '2020-03-02';
+
+    let u1 = path.join(process.cwd(),'public','content',`${room}.txt`);
+    let u2 = path.join(process.cwd(),'public','content',`${room2}.txt`);
+    console.log(u1)
+    const data = await new Promise((resolve,reject)=>{
+      if(fs.existsSync(u1)){
+      fs.readFile(u1,"utf-8",(err,data)=>{
+        data = data ? data : '';
+        var sp = data.split(/20\d\d-\d\d-\d\d/)
+          sp.shift();
+          console.log(sp);
+
+          var arr = [];
+          sp.map(item=>{
+            var i = item.indexOf(':');
+            var key = item.slice(0,i);
+            var value = item.slice(i+1);
+            arr.push({[key]:value});
+          });
+          console.log(arr);
+          resolve(arr);
+        })
+      }
+      else if(fs.existsSync(u2)){
+        fs.readFile(u2,"utf-8",(err,data)=>{
+          console.log(data);
+
+          data = data ? data : '';
+
+           var sp = data.split(/20\d\d-\d\d-\d\d/)
+            sp.shift();
+            console.log(sp);
+
+            var arr = [];
+            sp.map(item=>{
+              var i = item.indexOf(':');
+              var key = item.slice(0,i);
+              var value = item.slice(i+1);
+              arr.push({[key]:value});
+            });
+            console.log(arr);
+            resolve(arr);
+        })
+      }else{
+        console.log('没聊过天？yeah！！');
+        resolve([]);
+      }
+    })
+    ctx.body = {
+      error: 0,
+      data,
+    }
+  }
+  
+}

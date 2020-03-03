@@ -54,6 +54,9 @@ router.put('/user/password',user.keepLog,user.changePassword);
 // 个人中心 -> 用户删除
 router.delete('/user/delete/:id',user.keepLog,user.delete);
 
+// 用户聊天 ->
+router.get('/user/chat/:id',user.keepLog,user.chat);
+
 // 发表商品；
 router.post('/wares/add',user.keepLog,wares.add);
 // 商品类型；
