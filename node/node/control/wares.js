@@ -103,3 +103,24 @@ exports.details = async ctx => {
 		error: 0
 	};
 };
+
+exports.search = async ctx => {
+  let input = new RegExp(ctx.params.input,'i'); // 模糊查询
+  let page = ctx.params.page;
+  page--;
+
+  let d,t;
+  d = await Wares
+    .find({title: input})
+    .sort('-created')
+    .skip(page*10)
+    .limit(10)
+    .populate('from','username avatar');
+  t = await Diary.find(item) // 记录数量
+
+  ctx.body = {
+    error: 0,
+    total: t,
+    data: d,
+  };
+};
