@@ -116,7 +116,7 @@ exports.search = async ctx => {
     .skip(page*10)
     .limit(10)
     .populate('from','username avatar');
-  t = await Diary.find(item) // 记录数量
+  t = await Diary.find({title: input}) // 记录数量
 
   ctx.body = {
     error: 0,
