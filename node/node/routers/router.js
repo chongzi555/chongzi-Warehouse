@@ -66,6 +66,9 @@ router.get('/wares/mylist/:page',user.keepLog,wares.myList);
 // 商品详情；
 router.get('/wares/details/:id',user.keepLog,wares.details);
 
+// 成功下单
+router.put('/wares/success',user.keepLog,wares.success);
+
 // 商品搜索；
 router.get('/wares/find/:input',wares.search);
 

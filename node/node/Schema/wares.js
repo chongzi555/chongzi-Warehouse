@@ -16,6 +16,10 @@ const GoodsSchema = new Schema({
   see: Number, // 查看次数
   recentlytime: String, // 最近一次时间
   commentNum: Number, // 评论个数
+  num: {
+    type: Number,
+    default: 1
+  }
 },{versionKey:false,timestamps:{
     createdAt:'created' // 每个用户都带有注册时的时间。
   }});
