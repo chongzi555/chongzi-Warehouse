@@ -4,8 +4,8 @@ const Wares = require('../Models/wares');
 const Comment = require('../Models/comment')
 
 // 增加num字段；******
-// User.updateMany({'num':{'$exists':false}},{'$set':{'num':1}}).then(res=>{
-//   User.find().then(data=>{
+// Wares.updateMany({'num':{'$exists':false}},{'$set':{'num':1}}).then(res=>{
+//   Wares.find().then(data=>{
 //     console.log(data);
 //   })
 // })
