@@ -111,7 +111,7 @@ exports.search = async ctx => {
 
 exports.success = async ctx => {
   if(ctx.token.error == 0){
-    let body = ctx.request.body.id;
+    let id = ctx.request.body.id;
     await Wares.updateOne({_id:id},{$inc:{num:-1}}).exec();
     ctx.body = {
       error: 0,
