@@ -60,7 +60,7 @@ router.get('/user/chat/:id',user.keepLog,user.chat);
 // 发表商品；
 router.post('/wares/add',user.keepLog,wares.add);
 // 删除自己发表的商品；
-router.post('/wares/delete',user.keepLog,wares.delete);
+router.post('/wares/delete/:id',user.keepLog,wares.delete);
 // 商品类型；
 router.get('/wares/type/:type',user.keepLog,wares.type);
 // 我的旧物；

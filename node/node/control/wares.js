@@ -127,7 +127,7 @@ exports.success = async ctx => {
 
 exports.delete = async ctx => {
   if(ctx.token.error == 0){
-    let id = ctx.request.body.id;
+    let id = ctx.params.id;
     await Wares.deleteOne({_id:id}).exec();
     ctx.body = {
       error: 0,
