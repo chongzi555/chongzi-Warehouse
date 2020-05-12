@@ -124,3 +124,19 @@ exports.success = async ctx => {
     }
   }
 }
+
+exports.delete = async ctx => {
+  if(ctx.token.error == 0){
+    let id = ctx.request.body.id;
+    await Wares.deleteOne({_id:id}).exec();
+    ctx.body = {
+      error: 0,
+      data:{}
+    }
+  }else{
+    ctx.body = {
+      error: 1,
+      data: 0
+    }
+  }
+}
